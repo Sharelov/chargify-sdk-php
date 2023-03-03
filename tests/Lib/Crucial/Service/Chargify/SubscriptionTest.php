@@ -1,12 +1,11 @@
 <?php
-use GuzzleHttp\Handler\MockHandler;
 
+namespace Crucial\Tests\Lib\Crucial\Service\Chargify;
 
-/**
- * Class Crucial_Service_Chargify_SubscriptionTest
- *
- */
-class Crucial_Service_Chargify_SubscriptionTest extends PHPUnit_Framework_TestCase
+use Crucial\Tests\Helpers\ClientHelper;
+use PHPUnit\Framework\TestCase;
+
+class SubscriptionTest extends TestCase
 {
     public function testCreateSuccess()
     {

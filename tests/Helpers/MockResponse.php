@@ -1,4 +1,7 @@
 <?php
+
+namespace Crucial\Tests\Helpers;
+
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 

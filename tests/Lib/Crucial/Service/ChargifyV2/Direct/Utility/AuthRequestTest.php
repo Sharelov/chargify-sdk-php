@@ -1,12 +1,17 @@
 <?php
 
+namespace Crucial\Tests\Lib\Crucial\Service\ChargifyV2\Direct\Utility;
+
+use Crucial\Service\ChargifyV2;
+use Crucial\Service\ChargifyV2\Direct\Utility\AuthRequest;
+use Crucial\Tests\Helpers\MockResponse;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7;
-use Crucial\Service\ChargifyV2;
-use Crucial\Service\ChargifyV2\Direct\Utility\AuthRequest;
+use Crucial\Tests\Helpers\ClientV2Helper;
+use PHPUnit\Framework\TestCase;
 
-class Crucial_Service_ChargifyV2_Direct_Utility_AuthRequestTest extends PHPUnit_Framework_TestCase
+class AuthRequestTest extends TestCase
 {
     public function testAuthRequestSuccess()
     {
@@ -46,7 +51,7 @@ class Crucial_Service_ChargifyV2_Direct_Utility_AuthRequestTest extends PHPUnit_
 
         // set mock response
         $mock    = new MockHandler([
-            Psr7\parse_response(MockResponse::read('v2.authTest.error'))
+            Psr7\Message::parseResponse(MockResponse::read('v2.authTest.error'))
         ]);
         $handler = HandlerStack::create($mock);
         $chargify->getHttpClient()->getConfig('handler')->setHandler($handler);

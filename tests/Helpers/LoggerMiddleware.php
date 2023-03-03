@@ -1,8 +1,10 @@
 <?php
 
+namespace Crucial\Tests\Helpers;
+
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\MessageFormatter;
-use GuzzleHttp\Promise;
+use GuzzleHttp\Promise\Create;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LogLevel;
@@ -210,7 +212,7 @@ class LoggerMiddleware
      *
      * @param RequestInterface $request
      *
-     * @return Closure
+     * @return \Closure
      */
     protected function onSuccess(RequestInterface $request)
     {
@@ -225,7 +227,7 @@ class LoggerMiddleware
      *
      * @param RequestInterface $request
      *
-     * @return Closure
+     * @return \Closure
      */
     protected function onFailure(RequestInterface $request)
     {
@@ -236,7 +238,7 @@ class LoggerMiddleware
                 $this->log($request, null, $reason);
             }
 
-            return Promise\rejection_for($reason);
+            return Create::rejectionFor($reason);
         };
     }
 
@@ -245,7 +247,7 @@ class LoggerMiddleware
      *
      * @param callable $handler
      *
-     * @return Closure
+     * @return \Closure
      */
     public function __invoke(callable $handler)
     {

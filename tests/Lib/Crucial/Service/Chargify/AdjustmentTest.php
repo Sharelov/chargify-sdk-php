@@ -1,10 +1,11 @@
 <?php
 
-/**
- * Class Crucial_Service_Chargify_AdjustmentTest
- *
- */
-class Crucial_Service_Chargify_AdjustmentTest extends PHPUnit_Framework_TestCase
+namespace Crucial\Tests\Lib\Crucial\Service\Chargify;
+
+use Crucial\Tests\Helpers\ClientHelper;
+use PHPUnit\Framework\TestCase;
+
+class AdjustmentTest extends TestCase
 {
     public function testCreateSuccess()
     {

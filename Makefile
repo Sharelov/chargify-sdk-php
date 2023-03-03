@@ -24,10 +24,10 @@ ssh: ## [HOST] SSH to the Vagrant box
 		--command 'cd /vagrant/chargify-sdk-php && /bin/bash'
 
 test: ## [GUEST] Run the unit tests
-	@cd tests/phpunit && ../../vendor/bin/phpunit
+	./vendor/bin/phpunit tests
 
 testdox: ## [GUEST] Run the unit tests with testdox output
-	@cd tests/phpunit && ../../vendor/bin/phpunit --testdox
+	./vendor/bin/phpunit tests --testdox
 
 testcoverage: ## [GUEST] Run the unit tests and generate a code coverage report
-	@cd tests/phpunit && ../../vendor/bin/phpunit --coverage-html artifacts/coverage
+	 ./vendor/bin/phpunit tests --coverage-html artifacts/coverage

@@ -22,18 +22,18 @@ class ClientV2Helper
         $config = array();
         switch ($env) {
             case 'test':
-                $config = require dirname(__DIR__) . '/config/client-v2.php';
+                $config = require dirname(__DIR__).'/config/client-v2.php';
                 break;
             case 'dev':
-                $config = require dirname(__DIR__) . '/config/ClientV2Config.Dev.php';
+                $config = require dirname(__DIR__).'/config/ClientV2Config.Dev.php';
                 break;
         }
 
         $chargify = new ChargifyV2($config);
 
-        if (!empty($mockResponseFile)) {
+        if (! empty($mockResponseFile)) {
             $mock = new MockHandler([
-                Psr7\Message::parseResponse(MockResponse::read($mockResponseFile))
+                Psr7\Message::parseResponse(MockResponse::read($mockResponseFile)),
             ]);
             $handler = HandlerStack::create($mock);
             $chargify->getHttpClient()->getConfig('handler')->setHandler($handler);

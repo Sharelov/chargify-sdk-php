@@ -7,8 +7,8 @@ use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Promise\Create;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Log\LogLevel;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 /**
  * Guzzle middleware which logs a request and its response.
@@ -136,7 +136,7 @@ class LoggerMiddleware
             $response = $reason->getResponse();
         }
 
-        $level   = $this->getLogLevel($response);
+        $level = $this->getLogLevel($response);
         $message = $this->getLogMessage($request, $response, $reason);
         $context = compact('request', 'response', 'reason');
 
@@ -181,7 +181,7 @@ class LoggerMiddleware
      */
     protected function getLogLevel(ResponseInterface $response = null)
     {
-        if ( ! $this->logLevel) {
+        if (! $this->logLevel) {
             return $this->getDefaultLogLevel($response);
         }
 
@@ -199,7 +199,8 @@ class LoggerMiddleware
      *
      * @return string LogLevel
      */
-    protected function getDefaultLogLevel(ResponseInterface $response = null) {
+    protected function getDefaultLogLevel(ResponseInterface $response = null)
+    {
         if ($response && $response->getStatusCode() >= 300) {
             return LogLevel::NOTICE;
         }
@@ -232,9 +233,8 @@ class LoggerMiddleware
     protected function onFailure(RequestInterface $request)
     {
         return function ($reason) use ($request) {
-
             // Only log a rejected requests if it hasn't already been logged
-            if ( ! $this->logRequests) {
+            if (! $this->logRequests) {
                 $this->log($request, null, $reason);
             }
 
@@ -252,7 +252,6 @@ class LoggerMiddleware
     public function __invoke(callable $handler)
     {
         return function ($request, array $options) use ($handler) {
-
             // Only log requests if explicitly set to do so
             if ($this->logRequests) {
                 $this->log($request);

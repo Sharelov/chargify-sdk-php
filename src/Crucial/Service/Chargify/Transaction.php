@@ -136,11 +136,11 @@ class Transaction extends AbstractEntity
         $service = $this->getService();
 
         // transactions for a subscription
-        $response = $service->request('subscriptions/' . $subscriptionId . '/transactions', 'GET', NULL, $this->getParams());
+        $response = $service->request('subscriptions/'.$subscriptionId.'/transactions', 'GET', null, $this->getParams());
 
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $this->_normalizeResponseArray($responseArray);
         } else {
             $this->_data = array();
@@ -165,11 +165,11 @@ class Transaction extends AbstractEntity
         $service = $this->getService();
 
         // transactions for a subscription
-        $response = $service->request('transactions', 'GET', NULL, $this->getParams());
+        $response = $service->request('transactions', 'GET', null, $this->getParams());
 
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $this->_normalizeResponseArray($responseArray);
         } else {
             $this->_data = array();

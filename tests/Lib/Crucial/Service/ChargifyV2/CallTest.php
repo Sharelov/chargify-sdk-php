@@ -17,7 +17,7 @@ class CallTest extends TestCase
 //        ]);
 //        $chargify->getHttpClient()->getEmitter()->attach($mock);
 
-        $call     = $chargify->call()->readByChargifyId('1234');
+        $call = $chargify->call()->readByChargifyId('1234');
         $response = $call->getService()->getLastResponse();
 
         // check there wasn't an error
@@ -38,7 +38,7 @@ class CallTest extends TestCase
 //        ]);
 //        $chargify->getHttpClient()->getEmitter()->attach($mock);
 
-        $call     = $chargify->call()->readByChargifyId('1234');
+        $call = $chargify->call()->readByChargifyId('1234');
         $response = $call->getService()->getLastResponse();
 
         // $adjustment object should indicate an error

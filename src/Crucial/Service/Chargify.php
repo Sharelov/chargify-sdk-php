@@ -17,19 +17,13 @@
 
 namespace Crucial\Service;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\HandlerStack;
-use Crucial\Service\Chargify\Exception\BadMethodCallException;
 use Crucial\Service\Chargify\Adjustment;
 use Crucial\Service\Chargify\Charge;
 use Crucial\Service\Chargify\Component;
 use Crucial\Service\Chargify\Coupon;
 use Crucial\Service\Chargify\Customer;
 use Crucial\Service\Chargify\Event;
+use Crucial\Service\Chargify\Exception\BadMethodCallException;
 use Crucial\Service\Chargify\Product;
 use Crucial\Service\Chargify\Refund;
 use Crucial\Service\Chargify\Statement;
@@ -37,13 +31,19 @@ use Crucial\Service\Chargify\Stats;
 use Crucial\Service\Chargify\Subscription;
 use Crucial\Service\Chargify\Transaction;
 use Crucial\Service\Chargify\Webhook;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 
 class Chargify
 {
     /**
      * Version
      */
-    const VERSION = '0.1.1';
+    public const VERSION = '0.1.1';
 
     /**
      * Guzzle http client
@@ -118,24 +118,24 @@ class Chargify
         $this->config = $config;
 
         // set individual properties
-        $this->hostname  = trim($config['hostname'], '/');
-        $this->apiKey    = $config['api_key'];
+        $this->hostname = trim($config['hostname'], '/');
+        $this->apiKey = $config['api_key'];
         $this->sharedKey = $config['shared_key'];
 
-        if (!empty($config['timeout'])) {
-            $this->timeout   = $config['timeout'];
+        if (! empty($config['timeout'])) {
+            $this->timeout = $config['timeout'];
         }
 
         $this->httpClient = new Client([
-            'base_uri'        => 'https://' . $this->hostname . '/',
-            'handler'         => HandlerStack::create(),
-            'timeout'         => $this->timeout,
+            'base_uri' => 'https://'.$this->hostname.'/',
+            'handler' => HandlerStack::create(),
+            'timeout' => $this->timeout,
             'allow_redirects' => false,
-            'auth'            => [$this->apiKey, $this->password],
-            'headers'         => [
-                'User-Agent'   => 'chargify-sdk-php/' . self::VERSION . ' (https://github.com/chargely/chargify-sdk-php)',
-                'Content-Type' => 'application/' . $this->format
-            ]
+            'auth' => [$this->apiKey, $this->password],
+            'headers' => [
+                'User-Agent' => 'chargify-sdk-php/'.self::VERSION.' (https://github.com/chargely/chargify-sdk-php)',
+                'Content-Type' => 'application/'.$this->format,
+            ],
         ]);
     }
 
@@ -169,11 +169,11 @@ class Chargify
      */
     public function request($path, $method, $rawData = null, $params = [])
     {
-        $method  = strtoupper($method);
-        $path    = ltrim($path, '/');
-        $path    = $path . '.' . $this->format;
-        $client  = $this->getHttpClient();
-        $method  = strtoupper($method);
+        $method = strtoupper($method);
+        $path = ltrim($path, '/');
+        $path = $path.'.'.$this->format;
+        $client = $this->getHttpClient();
+        $method = strtoupper($method);
         $options = [
             'query' => $params,
             'body' => null,
@@ -187,7 +187,7 @@ class Chargify
             }
         }
 
-        if (!empty($rawData)) {
+        if (! empty($rawData)) {
             $options['body'] = Psr7\Utils::streamFor($rawData);
         }
 

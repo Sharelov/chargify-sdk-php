@@ -17,8 +17,8 @@
 
 namespace Crucial\Service\ChargifyV2;
 
-use GuzzleHttp\Psr7\Response;
 use Crucial\Service\ChargifyV2;
+use GuzzleHttp\Psr7\Response;
 
 abstract class AbstractEntity implements \ArrayAccess, \Iterator, \Countable
 {
@@ -94,7 +94,7 @@ abstract class AbstractEntity implements \ArrayAccess, \Iterator, \Countable
      */
     public function getParam($paramName)
     {
-        return !empty($this->_params[$paramName]) ? $this->_params[$paramName] : NULL;
+        return ! empty($this->_params[$paramName]) ? $this->_params[$paramName] : null;
     }
 
     /**
@@ -147,7 +147,7 @@ abstract class AbstractEntity implements \ArrayAccess, \Iterator, \Countable
      */
     public function isError()
     {
-        return !empty($this->errors);
+        return ! empty($this->errors);
     }
 
     /**
@@ -173,13 +173,13 @@ abstract class AbstractEntity implements \ArrayAccess, \Iterator, \Countable
     {
         $return = [];
 
-        if (!($response instanceof Response)) {
+        if (! ($response instanceof Response)) {
             $this->errors[] = [
                 // this error is coming from us, not the Chargify API response
-                'source'    => 'client',
+                'source' => 'client',
                 'attribute' => null,
-                'kind'      => 'networking',
-                'message'   => 'no response'
+                'kind' => 'networking',
+                'message' => 'no response',
             ];
 
             return $return;
@@ -188,20 +188,20 @@ abstract class AbstractEntity implements \ArrayAccess, \Iterator, \Countable
         /**
          * add error for bad status codes
          */
-        $code       = $response->getStatusCode();
+        $code = $response->getStatusCode();
         $errorCodes = [404, 401, 500];
         if (in_array($code, $errorCodes)) {
             $this->errors[] = [
                 // this error is coming from us, not the Chargify API response
-                'source'    => 'client',
+                'source' => 'client',
                 'attribute' => null,
-                'kind'      => 'status_code',
-                'message'   => 'Bad status code: ' . $code
+                'kind' => 'status_code',
+                'message' => 'Bad status code: '.$code,
             ];
         }
 
         $body = $response->getBody();
-        $body = trim((string)$body);
+        $body = trim((string) $body);
 
         /**
          * Return early if we have an empty body, which we can't turn into an array
@@ -215,7 +215,7 @@ abstract class AbstractEntity implements \ArrayAccess, \Iterator, \Countable
         $return = json_decode($body, true);
 
         // set errors, if any
-        if (!empty($return['result']['errors'])) {
+        if (! empty($return['result']['errors'])) {
             foreach ($return['result']['errors'] as $error) {
                 $this->errors[] = $error;
             }

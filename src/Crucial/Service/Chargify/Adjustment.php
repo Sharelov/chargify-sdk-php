@@ -19,7 +19,6 @@ namespace Crucial\Service\Chargify;
 
 class Adjustment extends AbstractEntity
 {
-
     /**
      * (either 'amount' or 'amount_in_cents' is required) If you use this
      * parameter, you should pass a dollar amount represented as a string. For
@@ -103,12 +102,12 @@ class Adjustment extends AbstractEntity
      */
     public function create($subscriptionId)
     {
-        $service       = $this->getService();
-        $rawData       = $this->getRawData(array('adjustment' => $this->getParams()));
-        $response      = $service->request('subscriptions/' . (int)$subscriptionId . '/adjustments', 'POST', $rawData);
+        $service = $this->getService();
+        $rawData = $this->getRawData(array('adjustment' => $this->getParams()));
+        $response = $service->request('subscriptions/'.(int) $subscriptionId.'/adjustments', 'POST', $rawData);
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError() && '201' == $response->getStatusCode()) {
+        if (! $this->isError() && '201' == $response->getStatusCode()) {
             $this->_data = $responseArray['adjustment'];
         } else {
             $this->_data = array();

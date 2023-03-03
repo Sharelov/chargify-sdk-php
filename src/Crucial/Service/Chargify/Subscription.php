@@ -380,10 +380,10 @@ class Subscription extends AbstractEntity
     public function read($subscriptionId)
     {
         $service = $this->getService();
-        $response = $service->request('subscriptions/' . (int)$subscriptionId, 'GET');
+        $response = $service->request('subscriptions/'.(int) $subscriptionId, 'GET');
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['subscription'];
         } else {
             $this->_data = array();
@@ -414,7 +414,7 @@ class Subscription extends AbstractEntity
         $response = $service->request('subscriptions', 'POST', $rawData);
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['subscription'];
         } else {
             $this->_data = array();
@@ -434,14 +434,14 @@ class Subscription extends AbstractEntity
     public function cancelImmediately($id)
     {
         $service = $this->getService();
-        $rawData = !empty($this->_params)
+        $rawData = ! empty($this->_params)
             ? $this->getRawData(array('subscription' => $this->_params))
             : null;
 
-        $response = $service->request('subscriptions/' . (int)$id, 'DELETE', $rawData);
+        $response = $service->request('subscriptions/'.(int) $id, 'DELETE', $rawData);
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['subscription'];
         } else {
             $this->_data = array();
@@ -465,10 +465,10 @@ class Subscription extends AbstractEntity
 
         $service = $this->getService();
         $rawData = $this->getRawData(array('subscription' => $this->_params));
-        $response = $service->request('subscriptions/' . (int)$id, 'PUT', $rawData);
+        $response = $service->request('subscriptions/'.(int) $id, 'PUT', $rawData);
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['subscription'];
         } else {
             $this->_data = array();
@@ -496,7 +496,7 @@ class Subscription extends AbstractEntity
             $params['include_trial'] = $includeTrial;
         }
 
-        $response = $service->request('subscriptions/' . (int)$id . '/reactivate', 'PUT', '', $params);
+        $response = $service->request('subscriptions/'.(int) $id.'/reactivate', 'PUT', '', $params);
         $responseArray = $this->getResponseArray($response);
 
         $code = $response->getStatusCode();
@@ -512,7 +512,7 @@ class Subscription extends AbstractEntity
             $this->_errors[] = $responseArray;
         }
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['subscription'];
         } else {
             $this->_data = array();
@@ -535,10 +535,10 @@ class Subscription extends AbstractEntity
     public function resetBalance($subscriptionId)
     {
         $service = $this->getService();
-        $response = $service->request('subscriptions/' . (int)$subscriptionId . '/reset_balance', 'GET');
+        $response = $service->request('subscriptions/'.(int) $subscriptionId.'/reset_balance', 'GET');
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['subscription'];
         } else {
             $this->_data = array();
@@ -561,10 +561,10 @@ class Subscription extends AbstractEntity
     {
         $service = $this->getService();
         $rawData = $this->getRawData(array('subscription' => $this->_params));
-        $response = $service->request('subscriptions/' . (int)$id, 'PUT', $rawData);
+        $response = $service->request('subscriptions/'.(int) $id, 'PUT', $rawData);
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['subscription'];
         } else {
             $this->_data = array();
@@ -599,10 +599,10 @@ class Subscription extends AbstractEntity
     {
         $service = $this->getService();
         $rawData = $this->getRawData(array('migration' => $this->_params));
-        $response = $service->request('subscriptions/' . (int)$subscriptionId . '/migrations', 'POST', $rawData);
+        $response = $service->request('subscriptions/'.(int) $subscriptionId.'/migrations', 'POST', $rawData);
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['subscription'];
         } else {
             $this->_data = array();
@@ -623,10 +623,10 @@ class Subscription extends AbstractEntity
     public function listSubscriptions()
     {
         $service = $this->getService();
-        $response = $service->request('subscriptions', 'GET', NULL, $this->_params);
+        $response = $service->request('subscriptions', 'GET', null, $this->_params);
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $this->_normalizeResponseArray($responseArray);
         } else {
             $this->_data = array();
@@ -646,10 +646,10 @@ class Subscription extends AbstractEntity
     public function listByCustomer($customerId)
     {
         $service = $this->getService();
-        $response = $service->request('customers/' . (int)$customerId . '/subscriptions', 'GET');
+        $response = $service->request('customers/'.(int) $customerId.'/subscriptions', 'GET');
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $this->_normalizeResponseArray($responseArray);
         } else {
             $this->_data = array();

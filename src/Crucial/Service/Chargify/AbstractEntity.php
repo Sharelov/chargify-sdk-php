@@ -17,8 +17,8 @@
 
 namespace Crucial\Service\Chargify;
 
-use GuzzleHttp\Psr7\Response;
 use Crucial\Service\Chargify;
+use GuzzleHttp\Psr7\Response;
 
 abstract class AbstractEntity implements \ArrayAccess, \Iterator, \Countable
 {
@@ -94,7 +94,7 @@ abstract class AbstractEntity implements \ArrayAccess, \Iterator, \Countable
      */
     public function getParam($paramName)
     {
-        return !empty($this->_params[$paramName]) ? $this->_params[$paramName] : NULL;
+        return ! empty($this->_params[$paramName]) ? $this->_params[$paramName] : null;
     }
 
     /**
@@ -147,7 +147,7 @@ abstract class AbstractEntity implements \ArrayAccess, \Iterator, \Countable
      */
     public function isError()
     {
-        return !empty($this->_errors);
+        return ! empty($this->_errors);
     }
 
     /**
@@ -173,19 +173,19 @@ abstract class AbstractEntity implements \ArrayAccess, \Iterator, \Countable
     public function getResponseArray($response)
     {
         $return = array();
-        if (!($response instanceof Response)) {
+        if (! ($response instanceof Response)) {
             $this->_errors['Crucial_Service_Chargify']['networking error'] = 'no response';
 
             return $return;
         }
 
         $body = $response->getBody();
-        $body = trim((string)$body);
+        $body = trim((string) $body);
 
         /**
          * return early on bad status codes
          */
-        $code       = $response->getStatusCode();
+        $code = $response->getStatusCode();
         $errorCodes = array(404, 401, 500);
         if (in_array($code, $errorCodes)) {
             $this->_errors['Crucial_Service_Chargify']['Bad status code'] = $code;
@@ -205,7 +205,7 @@ abstract class AbstractEntity implements \ArrayAccess, \Iterator, \Countable
         $return = json_decode($body, true);
 
         // set errors, if any
-        if (!empty($return['errors'])) {
+        if (! empty($return['errors'])) {
             $this->_errors = $return['errors'];
         }
 
@@ -266,7 +266,7 @@ abstract class AbstractEntity implements \ArrayAccess, \Iterator, \Countable
     #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        return isset($this->_data[$offset]) ? $this->_data[$offset] : NULL;
+        return isset($this->_data[$offset]) ? $this->_data[$offset] : null;
     }
 
     /**
@@ -322,7 +322,7 @@ abstract class AbstractEntity implements \ArrayAccess, \Iterator, \Countable
      */
     public function valid(): bool
     {
-        return $this->current() !== FALSE;
+        return $this->current() !== false;
     }
 
     /**

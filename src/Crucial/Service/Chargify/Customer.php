@@ -223,12 +223,12 @@ class Customer extends AbstractEntity
      */
     public function create()
     {
-        $service       = $this->getService();
-        $rawData       = $this->getRawData(array('customer' => $this->getParams()));
-        $response      = $service->request('customers', 'POST', $rawData);
+        $service = $this->getService();
+        $rawData = $this->getRawData(array('customer' => $this->getParams()));
+        $response = $service->request('customers', 'POST', $rawData);
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['customer'];
         } else {
             $this->_data = array();
@@ -247,10 +247,10 @@ class Customer extends AbstractEntity
     {
         $service = $this->getService();
 
-        $response      = $service->request('customers', 'GET', NULL, $this->getParams());
+        $response = $service->request('customers', 'GET', null, $this->getParams());
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $this->_normalizeResponseArray($responseArray);
         } else {
             $this->_data = array();
@@ -270,11 +270,11 @@ class Customer extends AbstractEntity
     {
         $service = $this->getService();
 
-        $response      = $service->request('customers/' . $id, 'GET');
+        $response = $service->request('customers/'.$id, 'GET');
         $responseArray = $this->getResponseArray($response);
 
         // a 404 will be returned if not found, so make sure we have a 200
-        if (!$this->isError() && '200' == $response->getStatusCode()) {
+        if (! $this->isError() && '200' == $response->getStatusCode()) {
             $this->_data = $responseArray['customer'];
         } else {
             $this->_data = array();
@@ -293,11 +293,11 @@ class Customer extends AbstractEntity
     {
         $service = $this->getService();
 
-        $response      = $service->request('customers/lookup', 'GET', '', $this->getParams());
+        $response = $service->request('customers/lookup', 'GET', '', $this->getParams());
         $responseArray = $this->getResponseArray($response);
 
         // a 404 will be returned if not found, so make sure we have a 200
-        if (!$this->isError() && '200' == $response->getStatusCode()) {
+        if (! $this->isError() && '200' == $response->getStatusCode()) {
             $this->_data = $responseArray['customer'];
         } else {
             $this->_data = array();
@@ -329,11 +329,11 @@ class Customer extends AbstractEntity
     {
         $service = $this->getService();
 
-        $rawData       = $this->getRawData(array('customer' => $this->getParams()));
-        $response      = $service->request('customers/' . (int)$id, 'PUT', $rawData);
+        $rawData = $this->getRawData(array('customer' => $this->getParams()));
+        $response = $service->request('customers/'.(int) $id, 'PUT', $rawData);
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['customer'];
         } else {
             $this->_data = array();
@@ -352,7 +352,6 @@ class Customer extends AbstractEntity
     protected function _normalizeResponseArray($responseArray)
     {
         $return = array();
-
 
         foreach ($responseArray as $prod) {
             $return[] = $prod['customer'];

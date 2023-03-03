@@ -9,7 +9,7 @@ class ComponentTest extends TestCase
 {
     public function testCreateMeteredStairstepSuccess()
     {
-        $chargify  = ClientHelper::getInstance('component.createMeteredStairstep.success');
+        $chargify = ClientHelper::getInstance('component.createMeteredStairstep.success');
         $component = $chargify->component()
             ->setName('Text Messages')
             ->setUnitName('message')
@@ -18,14 +18,14 @@ class ComponentTest extends TestCase
             ->setPrices(array(
                 array(
                     'starting_quantity' => 1,
-                    'ending_quantity'   => 100,
-                    'unit_price'        => 1.00
+                    'ending_quantity' => 100,
+                    'unit_price' => 1.00,
                 ),
                 array(
                     'starting_quantity' => 101,
-                    'ending_quantity'   => 1000,
-                    'unit_price'        => 10.00
-                )
+                    'ending_quantity' => 1000,
+                    'unit_price' => 10.00,
+                ),
             ))
             ->createComponent(1234, 'metered_components');
 
@@ -42,7 +42,7 @@ class ComponentTest extends TestCase
 
     public function testCreateMeteredStairstepError()
     {
-        $chargify  = ClientHelper::getInstance('adjustment.createMeteredStairstep.error.no_prices');
+        $chargify = ClientHelper::getInstance('adjustment.createMeteredStairstep.error.no_prices');
         $component = $chargify->component()
             ->setName('Text Messages')
             ->setUnitName('message')

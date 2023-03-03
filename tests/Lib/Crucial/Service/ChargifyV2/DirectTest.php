@@ -11,8 +11,8 @@ class DirectTest extends TestCase
     public function testAuthSuccess()
     {
         $chargify = ClientV2Helper::getInstance('v2.authTest.success');
-        $direct   = $chargify->direct();
-        $success  = $direct->checkAuth();
+        $direct = $chargify->direct();
+        $success = $direct->checkAuth();
 
         $this->assertTrue($success);
     }
@@ -20,8 +20,8 @@ class DirectTest extends TestCase
     public function testAuthFailure()
     {
         $chargify = ClientV2Helper::getInstance('v2.authTest.error');
-        $direct   = $chargify->direct();
-        $success  = $direct->checkAuth();
+        $direct = $chargify->direct();
+        $success = $direct->checkAuth();
 
         $this->assertFalse($success);
     }
@@ -29,7 +29,7 @@ class DirectTest extends TestCase
     public function testSetData()
     {
         $chargify = ClientV2Helper::getInstance();
-        $direct   = $chargify->direct();
+        $direct = $chargify->direct();
 
         // set redirect
         $redirect = 'http://example.local';
@@ -38,15 +38,15 @@ class DirectTest extends TestCase
         // set data
         $data = [
             'signup' => [
-                'product'  => [
-                    'id' => 1234
+                'product' => [
+                    'id' => 1234,
                 ],
                 'customer' => [
                     'first_name' => 'Dan',
-                    'last_name'  => 'Bowen',
-                    'email'      => 'foo@mailinator.com'
-                ]
-            ]
+                    'last_name' => 'Bowen',
+                    'email' => 'foo@mailinator.com',
+                ],
+            ],
         ];
         $direct->setData($data);
 
@@ -60,12 +60,12 @@ class DirectTest extends TestCase
     public function testGetRequestSignature()
     {
         $chargify = ClientV2Helper::getInstance();
-        $direct   = $chargify->direct();
+        $direct = $chargify->direct();
 
         $string = $direct->getApiId()
-            . $direct->getTimeStamp()
-            . $direct->getNonce()
-            . $direct->getDataString();
+            .$direct->getTimeStamp()
+            .$direct->getNonce()
+            .$direct->getDataString();
 
         $signature = hash_hmac('sha1', $string, $chargify->getApiSecret());
 
@@ -74,21 +74,21 @@ class DirectTest extends TestCase
 
     public function testGetResponseSignature()
     {
-        $chargify   = ClientV2Helper::getInstance();
-        $direct     = $chargify->direct();
-        $apiId      = $chargify->getApiId();
-        $timeStamp  = $direct->getTimeStamp();
-        $nonce      = $direct->getNonce();
+        $chargify = ClientV2Helper::getInstance();
+        $direct = $chargify->direct();
+        $apiId = $chargify->getApiId();
+        $timeStamp = $direct->getTimeStamp();
+        $nonce = $direct->getNonce();
         $statusCode = '200';
         $resultCode = '2000';
-        $callId     = '1234';
+        $callId = '1234';
 
         $signatureString = $apiId
-            . $timeStamp
-            . $nonce
-            . $statusCode
-            . $resultCode
-            . $callId;
+            .$timeStamp
+            .$nonce
+            .$statusCode
+            .$resultCode
+            .$callId;
 
         $signature = hash_hmac('sha1', $signatureString, $chargify->getApiSecret());
 
@@ -97,23 +97,23 @@ class DirectTest extends TestCase
 
     public function testIsValidResponseSignature()
     {
-        $chargify   = ClientV2Helper::getInstance();
-        $direct     = $chargify->direct();
-        $apiId      = $chargify->getApiId();
-        $timeStamp  = $direct->getTimeStamp();
-        $nonce      = $direct->getNonce();
+        $chargify = ClientV2Helper::getInstance();
+        $direct = $chargify->direct();
+        $apiId = $chargify->getApiId();
+        $timeStamp = $direct->getTimeStamp();
+        $nonce = $direct->getNonce();
         $statusCode = '200';
         $resultCode = '2000';
-        $callId     = '1234';
+        $callId = '1234';
 
         $validSignatureString = $apiId
-            . $timeStamp
-            . $nonce
-            . $statusCode
-            . $resultCode
-            . $callId;
+            .$timeStamp
+            .$nonce
+            .$statusCode
+            .$resultCode
+            .$callId;
 
-        $validSignature   = hash_hmac('sha1', $validSignatureString, $chargify->getApiSecret());
+        $validSignature = hash_hmac('sha1', $validSignatureString, $chargify->getApiSecret());
         $inValidSignature = str_repeat('x', 40);
 
         $this->assertTrue($direct->isValidResponseSignature($validSignature, $apiId, $timeStamp, $nonce, $statusCode, $resultCode, $callId));
@@ -123,7 +123,7 @@ class DirectTest extends TestCase
     public function testFormCreation()
     {
         $chargify = ClientV2Helper::getInstance();
-        $direct   = $chargify->direct();
+        $direct = $chargify->direct();
 
         // set redirect
         $direct->setRedirect('http://example.local');
@@ -131,15 +131,15 @@ class DirectTest extends TestCase
         // set data
         $data = [
             'signup' => [
-                'product'  => [
-                    'id' => 1234
+                'product' => [
+                    'id' => 1234,
                 ],
                 'customer' => [
                     'first_name' => 'Dan',
-                    'last_name'  => 'Bowen',
-                    'email'      => 'foo@mailinator.com'
-                ]
-            ]
+                    'last_name' => 'Bowen',
+                    'email' => 'foo@mailinator.com',
+                ],
+            ],
         ];
         $direct->setData($data);
 
@@ -147,12 +147,12 @@ class DirectTest extends TestCase
         $this->assertEquals($signupAction, $direct->getSignupAction());
 
         // get hidden fields
-        $hiddenFields   = $direct->getHiddenFields();
-        $apiIdField     = '<input type="hidden" name="secure[api_id]"    value="' . $chargify->getApiId() . '" />';
-        $timestampField = '<input type="hidden" name="secure[timestamp]" value="' . $direct->getTimeStamp() . '" />';
-        $nonceField     = '<input type="hidden" name="secure[nonce]"     value="' . $direct->getNonce() . '" />';
-        $dataField      = '<input type="hidden" name="secure[data]"      value="' . $direct->getDataStringEncoded() . '" />';
-        $signatureField = '<input type="hidden" name="secure[signature]" value="' . $direct->getRequestSignature() . '" />';
+        $hiddenFields = $direct->getHiddenFields();
+        $apiIdField = '<input type="hidden" name="secure[api_id]"    value="'.$chargify->getApiId().'" />';
+        $timestampField = '<input type="hidden" name="secure[timestamp]" value="'.$direct->getTimeStamp().'" />';
+        $nonceField = '<input type="hidden" name="secure[nonce]"     value="'.$direct->getNonce().'" />';
+        $dataField = '<input type="hidden" name="secure[data]"      value="'.$direct->getDataStringEncoded().'" />';
+        $signatureField = '<input type="hidden" name="secure[signature]" value="'.$direct->getRequestSignature().'" />';
 
         $this->assertStringContainsString($apiIdField, $hiddenFields);
         $this->assertStringContainsString($timestampField, $hiddenFields);
@@ -166,7 +166,7 @@ class DirectTest extends TestCase
         $this->expectException(BadMethodCallException::class);
 
         $chargify = ClientV2Helper::getInstance();
-        $direct   = $chargify->direct();
+        $direct = $chargify->direct();
 
         $direct->getRequestSignature();
         $direct->setRedirect('http://example.local');
@@ -177,7 +177,7 @@ class DirectTest extends TestCase
         $this->expectException(BadMethodCallException::class);
 
         $chargify = ClientV2Helper::getInstance();
-        $direct   = $chargify->direct();
+        $direct = $chargify->direct();
 
         $direct->getRequestSignature();
         $direct->setData([]);
@@ -186,7 +186,7 @@ class DirectTest extends TestCase
     public function testGetCardUpdateAction()
     {
         $chargify = ClientV2Helper::getInstance();
-        $direct   = $chargify->direct();
+        $direct = $chargify->direct();
 
         $this->assertEquals('https://api.chargify.com/api/v2/subscriptions/1234/card_update', $direct->getCardUpdateAction('1234'));
     }

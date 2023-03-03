@@ -19,22 +19,21 @@ class ClientHelper
      */
     public static function getInstance(string $mockResponseFile = null, string $env = 'test'): Chargify
     {
-
         $config = array();
         switch ($env) {
             case 'test':
-                $config = require dirname(__DIR__) . '/config/client.php';
+                $config = require dirname(__DIR__).'/config/client.php';
                 break;
             case 'dev':
-                $config = require dirname(__DIR__) . '/config/ClientConfig.Dev.php';
+                $config = require dirname(__DIR__).'/config/ClientConfig.Dev.php';
                 break;
         }
 
         $chargify = new Chargify($config);
 
-        if (!empty($mockResponseFile)) {
+        if (! empty($mockResponseFile)) {
             $mock = new MockHandler([
-                Psr7\Message::parseResponse(MockResponse::read($mockResponseFile))
+                Psr7\Message::parseResponse(MockResponse::read($mockResponseFile)),
             ]);
             $handler = HandlerStack::create($mock);
 

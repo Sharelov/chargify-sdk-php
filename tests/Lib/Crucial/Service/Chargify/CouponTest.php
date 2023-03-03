@@ -10,7 +10,7 @@ class CouponTest extends TestCase
     public function testFindCouponSuccess()
     {
         $chargify = ClientHelper::getInstance('coupon.find.success');
-        $coupon   = $chargify->coupon()
+        $coupon = $chargify->coupon()
             ->setCode('TEST1')
             ->find(1234);
 
@@ -20,7 +20,6 @@ class CouponTest extends TestCase
         $this->assertFalse($coupon->isError(), '$coupon has an error');
         $this->assertEquals(200, $response->getStatusCode(), 'Expected status code 200');
 
-
         // check for a couple of attributes on the $adjustment object
         $this->assertNotEmpty($coupon['id'], '$coupon["id"] was empty');
         $this->assertEquals($coupon['code'], 'TEST1', '$coupon["code"] mismatch');
@@ -29,7 +28,7 @@ class CouponTest extends TestCase
     public function testFindNonExistentCodeIsError()
     {
         $chargify = ClientHelper::getInstance('coupon.find.error');
-        $coupon   = $chargify->coupon()
+        $coupon = $chargify->coupon()
             ->setCode('THIS_CODE_DOESNT_EXIST')
             ->find(1234);
 

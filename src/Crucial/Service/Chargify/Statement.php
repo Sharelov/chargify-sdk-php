@@ -46,11 +46,11 @@ class Statement extends AbstractEntity
         $service = $this->getService();
 
         // statements for a subscription
-        $response = $service->request('subscriptions/' . (int)$subscriptionId . '/statements', 'GET', NULL, $this->getParams());
+        $response = $service->request('subscriptions/'.(int) $subscriptionId.'/statements', 'GET', null, $this->getParams());
 
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $this->_normalizeResponseArray($responseArray);
         } else {
             $this->_data = array();
@@ -70,11 +70,11 @@ class Statement extends AbstractEntity
     {
         $service = $this->getService();
 
-        $response = $service->request('statements/' . (int)$statementId, 'GET');
+        $response = $service->request('statements/'.(int) $statementId, 'GET');
 
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['statement'];
         } else {
             $this->_data = array();

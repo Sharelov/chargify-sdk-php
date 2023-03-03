@@ -9,7 +9,7 @@ class AdjustmentTest extends TestCase
 {
     public function testCreateSuccess()
     {
-        $chargify   = ClientHelper::getInstance('adjustment.create.success');
+        $chargify = ClientHelper::getInstance('adjustment.create.success');
         $adjustment = $chargify->adjustment()
             ->setAmountInCents(1099)
             ->setMemo('Test Memo')

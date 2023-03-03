@@ -165,10 +165,10 @@ class Component extends AbstractEntity
     {
         $service = $this->getService();
 
-        $response      = $service->request('subscriptions/' . (int)$id . '/components', 'GET');
+        $response = $service->request('subscriptions/'.(int) $id.'/components', 'GET');
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $this->_normalizeResponseArray($responseArray);
         } else {
             $this->_data = array();
@@ -189,10 +189,10 @@ class Component extends AbstractEntity
     {
         $service = $this->getService();
 
-        $response      = $service->request('subscriptions/' . (int)$subscriptionId . '/components/' . (int)$componentId, 'GET');
+        $response = $service->request('subscriptions/'.(int) $subscriptionId.'/components/'.(int) $componentId, 'GET');
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['component'];
         } else {
             $this->_data = array();
@@ -212,12 +212,12 @@ class Component extends AbstractEntity
      */
     public function setQuantityAllocation($subscriptionId, $componentId)
     {
-        $service       = $this->getService();
-        $rawData       = $this->getRawData(array('component' => $this->_params));
-        $response      = $service->request('subscriptions/' . (int)$subscriptionId . '/components/' . (int)$componentId, 'PUT', $rawData);
+        $service = $this->getService();
+        $rawData = $this->getRawData(array('component' => $this->_params));
+        $response = $service->request('subscriptions/'.(int) $subscriptionId.'/components/'.(int) $componentId, 'PUT', $rawData);
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['component'];
         } else {
             $this->_data = array();
@@ -238,12 +238,12 @@ class Component extends AbstractEntity
      */
     public function createQuantityAllocation($subscriptionId, $componentId)
     {
-        $service       = $this->getService();
-        $rawData       = $this->getRawData(array('allocation' => $this->_params));
-        $response      = $service->request('subscriptions/' . (int)$subscriptionId . '/components/' . (int)$componentId . '/allocations', 'POST', $rawData);
+        $service = $this->getService();
+        $rawData = $this->getRawData(array('allocation' => $this->_params));
+        $response = $service->request('subscriptions/'.(int) $subscriptionId.'/components/'.(int) $componentId.'/allocations', 'POST', $rawData);
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['allocation'];
         } else {
             $this->_data = array();
@@ -264,13 +264,13 @@ class Component extends AbstractEntity
      */
     public function createUsage($subscriptionId, $componentId)
     {
-        $service  = $this->getService();
-        $rawData  = $this->getRawData(array('usage' => $this->_params));
-        $response = $service->request('subscriptions/' . (int)$subscriptionId . '/components/' . (int)$componentId . '/usages', 'POST', $rawData);
+        $service = $this->getService();
+        $rawData = $this->getRawData(array('usage' => $this->_params));
+        $response = $service->request('subscriptions/'.(int) $subscriptionId.'/components/'.(int) $componentId.'/usages', 'POST', $rawData);
 
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['usage'];
         } else {
             $this->_data = array();
@@ -290,10 +290,10 @@ class Component extends AbstractEntity
     {
         $service = $this->getService();
 
-        $response      = $service->request('product_families/' . (int)$productFamilyId . '/components', 'GET');
+        $response = $service->request('product_families/'.(int) $productFamilyId.'/components', 'GET');
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $this->_normalizeResponseArray($responseArray);
         } else {
             $this->_data = array();
@@ -314,10 +314,10 @@ class Component extends AbstractEntity
     {
         $service = $this->getService();
 
-        $response      = $service->request('product_families/' . (int)$productFamilyId . '/components/' . (int)$componentId, 'GET');
+        $response = $service->request('product_families/'.(int) $productFamilyId.'/components/'.(int) $componentId, 'GET');
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['component'];
         } else {
             $this->_data = array();
@@ -360,12 +360,12 @@ class Component extends AbstractEntity
             default:
                 break;
         }
-        $rawData  = $this->getRawData(array($rawDataKey => $this->_params));
-        $response = $service->request('product_families/' . (int)$productFamilyId . '/' . $componentType, 'POST', $rawData);
+        $rawData = $this->getRawData(array($rawDataKey => $this->_params));
+        $response = $service->request('product_families/'.(int) $productFamilyId.'/'.$componentType, 'POST', $rawData);
 
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError() && '201' == $response->getStatusCode()) {
+        if (! $this->isError() && '201' == $response->getStatusCode()) {
             $this->_data = $responseArray['component'];
         } else {
             $this->_data = array();

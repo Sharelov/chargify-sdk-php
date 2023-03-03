@@ -19,7 +19,6 @@ namespace Crucial\Service\Chargify;
 
 class Stats extends AbstractEntity
 {
-
     /**
      * Get stats for a site
      *
@@ -30,11 +29,11 @@ class Stats extends AbstractEntity
         $service = $this->getService();
 
         // stats for a site
-        $response = $service->request('stats', 'GET', NULL, $this->getParams());
+        $response = $service->request('stats', 'GET', null, $this->getParams());
 
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray;
         } else {
             $this->_data = array();

@@ -126,7 +126,6 @@ class Chargify
             $this->timeout   = $config['timeout'];
         }
 
-
         $this->httpClient = new Client([
             'base_uri'        => 'https://' . $this->hostname . '/',
             'handler'         => HandlerStack::create(),
@@ -189,7 +188,7 @@ class Chargify
         }
 
         if (!empty($rawData)) {
-            $options['body'] = Psr7\stream_for($rawData);
+            $options['body'] = Psr7\Utils::streamFor($rawData);
         }
 
         try {

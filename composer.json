@@ -47,7 +47,8 @@
         "sort-packages": true
     },
     "scripts": {
-        "test": "vendor/bin/phpunit"
+        "test": "vendor/bin/phpunit",
+        "format": "vendor/bin/pint"
     },
     "prefer-stable": true
 }

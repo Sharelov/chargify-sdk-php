@@ -28,7 +28,6 @@
         "guzzlehttp/guzzle": "^7.0"
     },
     "require-dev": {
-        "fabpot/php-cs-fixer": "^3.14",
         "laravel/pint": "^1.6",
         "monolog/monolog": "^3.3",
         "phpunit/phpunit": "^10.0"

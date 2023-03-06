@@ -1,7 +1,7 @@
 name: Auto format
 
 on:
-  pull-request:
+  pull_request:
 
 jobs:
   coding-style:

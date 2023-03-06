@@ -31,3 +31,6 @@ testdox: ## [GUEST] Run the unit tests with testdox output
 
 testcoverage: ## [GUEST] Run the unit tests and generate a code coverage report
 	 ./vendor/bin/phpunit tests --coverage-html artifacts/coverage
+
+format: ## [GUEST] Run the php fixer (laravel pint)
+	 ./vendor/bin/pint

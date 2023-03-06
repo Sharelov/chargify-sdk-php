@@ -1,6 +1,11 @@
 <?php
 
-class Crucial_Service_ChargifyTest extends PHPUnit_Framework_TestCase
+namespace Crucial\Tests\Lib\Crucial\Service;
+
+use Crucial\Tests\Helpers\ClientHelper;
+use PHPUnit\Framework\TestCase;
+
+class ChargifyTest extends TestCase
 {
     public function testHelperInstances()
     {

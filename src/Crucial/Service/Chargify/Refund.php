@@ -102,12 +102,12 @@ class Refund extends AbstractEntity
      */
     public function create($subscriptionId)
     {
-        $service       = $this->getService();
-        $rawData       = $this->getRawData(array('refund' => $this->getParams()));
-        $response      = $service->request('subscriptions/' . (int)$subscriptionId . '/refunds', 'POST', $rawData);
+        $service = $this->getService();
+        $rawData = $this->getRawData(array('refund' => $this->getParams()));
+        $response = $service->request('subscriptions/'.(int) $subscriptionId.'/refunds', 'POST', $rawData);
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError() && '201' == $response->getStatusCode()) {
+        if (! $this->isError() && '201' == $response->getStatusCode()) {
             $this->_data = $responseArray['refund'];
         } else {
             $this->_data = array();

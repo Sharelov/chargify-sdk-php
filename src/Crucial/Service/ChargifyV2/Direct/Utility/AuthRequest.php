@@ -16,10 +16,10 @@
 
 namespace Crucial\Service\ChargifyV2\Direct\Utility;
 
+use Crucial\Service\ChargifyV2\Direct;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
-use Crucial\Service\ChargifyV2\Direct;
 
 class AuthRequest
 {
@@ -43,7 +43,7 @@ class AuthRequest
      */
     public function __construct(Direct $direct)
     {
-        $this->direct     = $direct;
+        $this->direct = $direct;
         $this->httpClient = $direct->getService()->getHttpClient();
     }
 
@@ -55,13 +55,13 @@ class AuthRequest
     public function test()
     {
         $response = $this->request();
-        $body     = trim((string)$response->getBody());
+        $body = trim((string) $response->getBody());
 
         // invalid If body contains 'Incorrect signature'
         $bodyIsInvalid = (0 === strcasecmp('Incorrect signature', $body));
 
         // invalid if chargify does not redirect us
-        $locationHeader    = $response->getHeader('Location');
+        $locationHeader = $response->getHeader('Location');
         $locationIsInvalid = empty($locationHeader);
 
         // invalid if status code is 200
@@ -99,13 +99,13 @@ class AuthRequest
             $response = $this->httpClient->post($this->direct->getSignupAction(), [
                 'form_params' => [
                     'secure' => [
-                        'api_id'    => $this->direct->getApiId(),
+                        'api_id' => $this->direct->getApiId(),
                         'timestamp' => $this->direct->getTimeStamp(),
-                        'nonce'     => $this->direct->getNonce(),
+                        'nonce' => $this->direct->getNonce(),
                         'signature' => $this->direct->getRequestSignature(),
-                        'data'      => $this->direct->getDataStringEncoded()
-                    ]
-                ]
+                        'data' => $this->direct->getDataStringEncoded(),
+                    ],
+                ],
             ]);
         } catch (RequestException $e) {
             if ($e->hasResponse()) {

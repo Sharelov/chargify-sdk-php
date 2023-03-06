@@ -1,9 +1,11 @@
 <?php
-/**
- * Class Crucial_Service_ChargifyV2_CallTest
- *
- */
-class Crucial_Service_ChargifyV2_CallTest extends PHPUnit_Framework_TestCase
+
+namespace Crucial\Tests\Lib\Crucial\Service\ChargifyV2;
+
+use Crucial\Tests\Helpers\ClientV2Helper;
+use PHPUnit\Framework\TestCase;
+
+class CallTest extends TestCase
 {
     public function testReadSuccess()
     {
@@ -15,7 +17,7 @@ class Crucial_Service_ChargifyV2_CallTest extends PHPUnit_Framework_TestCase
 //        ]);
 //        $chargify->getHttpClient()->getEmitter()->attach($mock);
 
-        $call     = $chargify->call()->readByChargifyId('1234');
+        $call = $chargify->call()->readByChargifyId('1234');
         $response = $call->getService()->getLastResponse();
 
         // check there wasn't an error
@@ -36,7 +38,7 @@ class Crucial_Service_ChargifyV2_CallTest extends PHPUnit_Framework_TestCase
 //        ]);
 //        $chargify->getHttpClient()->getEmitter()->attach($mock);
 
-        $call     = $chargify->call()->readByChargifyId('1234');
+        $call = $chargify->call()->readByChargifyId('1234');
         $response = $call->getService()->getLastResponse();
 
         // $adjustment object should indicate an error

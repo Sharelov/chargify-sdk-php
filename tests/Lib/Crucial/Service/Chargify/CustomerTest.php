@@ -1,12 +1,12 @@
 <?php
 
-/**
- * Class Crucial_Service_Chargify_CustomerTest
- *
- */
-class Crucial_Service_Chargify_CustomerTest extends PHPUnit_Framework_TestCase
-{
+namespace Crucial\Tests\Lib\Crucial\Service\Chargify;
 
+use Crucial\Tests\Helpers\ClientHelper;
+use PHPUnit\Framework\TestCase;
+
+class CustomerTest extends TestCase
+{
     public function testReadByReference()
     {
         $chargify = ClientHelper::getInstance('customer.readByReference.success');

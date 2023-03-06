@@ -28,10 +28,10 @@ class Product extends AbstractEntity
     {
         $service = $this->getService();
 
-        $response      = $service->request('products', 'GET');
+        $response = $service->request('products', 'GET');
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $this->_normalizeResponseArray($responseArray);
         } else {
             $this->_data = array();
@@ -51,10 +51,10 @@ class Product extends AbstractEntity
     {
         $service = $this->getService();
 
-        $response      = $service->request('products/' . $id, 'GET');
+        $response = $service->request('products/'.$id, 'GET');
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['product'];
         } else {
             $this->_data = array();
@@ -74,10 +74,10 @@ class Product extends AbstractEntity
     {
         $service = $this->getService();
 
-        $response      = $service->request('products/handle/' . $handle, 'GET');
+        $response = $service->request('products/handle/'.$handle, 'GET');
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['product'];
         } else {
             $this->_data = array();

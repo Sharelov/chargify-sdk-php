@@ -96,11 +96,11 @@ class Event extends AbstractEntity
         $service = $this->getService();
 
         // events for a site
-        $response = $service->request('events', 'GET', NULL, $this->getParams());
+        $response = $service->request('events', 'GET', null, $this->getParams());
 
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $this->_normalizeResponseArray($responseArray);
         } else {
             $this->_data = array();
@@ -125,11 +125,11 @@ class Event extends AbstractEntity
         $service = $this->getService();
 
         // events for a subscription
-        $response = $service->request('subscriptions/' . $subscriptionId . '/events', 'GET', NULL, $this->getParams());
+        $response = $service->request('subscriptions/'.$subscriptionId.'/events', 'GET', null, $this->getParams());
 
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $this->_normalizeResponseArray($responseArray);
         } else {
             $this->_data = array();

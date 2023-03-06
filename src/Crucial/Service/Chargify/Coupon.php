@@ -47,10 +47,10 @@ class Coupon extends AbstractEntity
     {
         $service = $this->getService();
 
-        $response      = $service->request('product_families/' . $productFamilyId . '/coupons/' . $couponId, 'GET');
+        $response = $service->request('product_families/'.$productFamilyId.'/coupons/'.$couponId, 'GET');
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $responseArray['coupon'];
         } else {
             $this->_data = array();
@@ -73,12 +73,12 @@ class Coupon extends AbstractEntity
      */
     public function find($productFamilyId)
     {
-        $service       = $this->getService();
-        $response      = $service->request('product_families/' . $productFamilyId . '/coupons/find', 'GET', NULL, $this->_params);
+        $service = $this->getService();
+        $response = $service->request('product_families/'.$productFamilyId.'/coupons/find', 'GET', null, $this->_params);
         $responseArray = $this->getResponseArray($response);
 
         // status code must be 200, otherwise the code in $this->setCode() was not found
-        if (!$this->isError() && '200' == $response->getStatusCode()) {
+        if (! $this->isError() && '200' == $response->getStatusCode()) {
             $this->_data = $responseArray['coupon'];
         } else {
             $this->_data = array();

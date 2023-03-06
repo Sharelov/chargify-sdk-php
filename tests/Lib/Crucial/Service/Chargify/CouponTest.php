@@ -1,15 +1,16 @@
 <?php
 
-/**
- * Class Crucial_Service_Chargify_CouponTest
- *
- */
-class Crucial_Service_Chargify_CouponTest extends PHPUnit_Framework_TestCase
+namespace Crucial\Tests\Lib\Crucial\Service\Chargify;
+
+use Crucial\Tests\Helpers\ClientHelper;
+use PHPUnit\Framework\TestCase;
+
+class CouponTest extends TestCase
 {
     public function testFindCouponSuccess()
     {
         $chargify = ClientHelper::getInstance('coupon.find.success');
-        $coupon   = $chargify->coupon()
+        $coupon = $chargify->coupon()
             ->setCode('TEST1')
             ->find(1234);
 
@@ -19,7 +20,6 @@ class Crucial_Service_Chargify_CouponTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($coupon->isError(), '$coupon has an error');
         $this->assertEquals(200, $response->getStatusCode(), 'Expected status code 200');
 
-
         // check for a couple of attributes on the $adjustment object
         $this->assertNotEmpty($coupon['id'], '$coupon["id"] was empty');
         $this->assertEquals($coupon['code'], 'TEST1', '$coupon["code"] mismatch');
@@ -28,7 +28,7 @@ class Crucial_Service_Chargify_CouponTest extends PHPUnit_Framework_TestCase
     public function testFindNonExistentCodeIsError()
     {
         $chargify = ClientHelper::getInstance('coupon.find.error');
-        $coupon   = $chargify->coupon()
+        $coupon = $chargify->coupon()
             ->setCode('THIS_CODE_DOESNT_EXIST')
             ->find(1234);
 

@@ -88,11 +88,11 @@ class Webhook extends AbstractEntity
         $service = $this->getService();
 
         // webhooks for a site
-        $response = $service->request('webhooks', 'GET', NULL, $this->getParams());
+        $response = $service->request('webhooks', 'GET', null, $this->getParams());
 
         $responseArray = $this->getResponseArray($response);
 
-        if (!$this->isError()) {
+        if (! $this->isError()) {
             $this->_data = $this->_normalizeResponseArray($responseArray);
         } else {
             $this->_data = array();

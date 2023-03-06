@@ -1,4 +1,7 @@
 <?php
+
+namespace Crucial\Tests\Helpers;
+
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 
@@ -19,11 +22,11 @@ class MockResponse
         $responseString = Psr7\str($response);
 
         // remove identifying information
-        $responseString = preg_replace("/^Set-Cookie: (.*)$/im", "Set-Cookie: removed", $responseString);
-        $responseString = preg_replace("/^X-Request-Id: (.*)$/im", "X-Request-Id: removed", $responseString);
+        $responseString = preg_replace('/^Set-Cookie: (.*)$/im', 'Set-Cookie: removed', $responseString);
+        $responseString = preg_replace('/^X-Request-Id: (.*)$/im', 'X-Request-Id: removed', $responseString);
 
         // write the mock response
-        $handle = fopen(dirname(__DIR__) . '/mock/' . $filename, 'w+');
+        $handle = fopen(dirname(__DIR__).'/mock/'.$filename, 'w+');
         fwrite($handle, $responseString);
         fclose($handle);
     }
@@ -37,6 +40,6 @@ class MockResponse
      */
     public static function read($filename)
     {
-        return file_get_contents(dirname(__DIR__) . '/mock/' . $filename);
+        return file_get_contents(dirname(__DIR__).'/mock/'.$filename);
     }
 }

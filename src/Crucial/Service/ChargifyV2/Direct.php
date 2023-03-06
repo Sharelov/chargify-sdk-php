@@ -17,9 +17,9 @@
 
 namespace Crucial\Service\ChargifyV2;
 
-use Crucial\Service\ChargifyV2,
-    Crucial\Service\ChargifyV2\Direct\Utility\AuthRequest,
-    Crucial\Service\ChargifyV2\Exception\BadMethodCallException;
+use Crucial\Service\ChargifyV2;
+use Crucial\Service\ChargifyV2\Direct\Utility\AuthRequest;
+use Crucial\Service\ChargifyV2\Exception\BadMethodCallException;
 
 class Direct
 {
@@ -85,10 +85,10 @@ class Direct
      */
     public function __construct(ChargifyV2 $service)
     {
-        $this->service         = $service;
+        $this->service = $service;
         $this->authTestUtility = new AuthRequest($this);
-        $this->nonce           = $this->generateNonce();
-        $this->timeStamp       = time();
+        $this->nonce = $this->generateNonce();
+        $this->timeStamp = time();
     }
 
     /**
@@ -207,7 +207,7 @@ class Direct
      */
     protected function mergeRedirect()
     {
-        if (!empty($this->redirect)) {
+        if (! empty($this->redirect)) {
             $this->data = array_merge_recursive($this->data, array('redirect_uri' => $this->redirect));
         }
     }
@@ -223,8 +223,8 @@ class Direct
     protected function generateNonce()
     {
         // generate a random string
-        $bits   = 256;
-        $bytes  = ceil($bits / 8);
+        $bits = 256;
+        $bytes = ceil($bits / 8);
         $string = '';
         for ($i = 0; $i < $bytes; $i++) {
             $string .= chr(mt_rand(0, 255));
@@ -274,11 +274,10 @@ class Direct
     public function getRequestSignature()
     {
         if (empty($this->requestSignature)) {
-
             $string = $this->getApiId()
-                . $this->getTimeStamp()
-                . $this->getNonce()
-                . $this->getDataString();
+                .$this->getTimeStamp()
+                .$this->getNonce()
+                .$this->getDataString();
 
             $this->requestSignature = hash_hmac('sha1', $string, $this->getService()->getApiSecret());
         }
@@ -305,11 +304,11 @@ class Direct
     public function getResponseSignature($apiId, $timestamp, $nonce, $statusCode, $resultCode, $callId)
     {
         $string = $apiId
-            . $timestamp
-            . $nonce
-            . $statusCode
-            . $resultCode
-            . $callId;
+            .$timestamp
+            .$nonce
+            .$statusCode
+            .$resultCode
+            .$callId;
 
         return hash_hmac('sha1', $string, $this->getService()->getApiSecret());
     }
@@ -344,7 +343,7 @@ class Direct
      */
     public function getSignupAction()
     {
-        return trim($this->getService()->getBaseUrl(), '/') . '/signups';
+        return trim($this->getService()->getBaseUrl(), '/').'/signups';
     }
 
     /**
@@ -356,7 +355,7 @@ class Direct
      */
     public function getCardUpdateAction($subscriptionId)
     {
-        return trim($this->getService()->getBaseUrl(), '/') . '/subscriptions/' . (string)$subscriptionId . '/card_update';
+        return trim($this->getService()->getBaseUrl(), '/').'/subscriptions/'.(string) $subscriptionId.'/card_update';
     }
 
     /**
@@ -366,11 +365,11 @@ class Direct
      */
     public function getHiddenFields()
     {
-        $apiId     = '<input type="hidden" name="secure[api_id]"    value="' . $this->getApiId() . '" />';
-        $timestamp = '<input type="hidden" name="secure[timestamp]" value="' . $this->getTimeStamp() . '" />';
-        $nonce     = '<input type="hidden" name="secure[nonce]"     value="' . $this->getNonce() . '" />';
-        $data      = '<input type="hidden" name="secure[data]"      value="' . $this->getDataStringEncoded() . '" />';
-        $signature = '<input type="hidden" name="secure[signature]" value="' . $this->getRequestSignature() . '" />';
+        $apiId = '<input type="hidden" name="secure[api_id]"    value="'.$this->getApiId().'" />';
+        $timestamp = '<input type="hidden" name="secure[timestamp]" value="'.$this->getTimeStamp().'" />';
+        $nonce = '<input type="hidden" name="secure[nonce]"     value="'.$this->getNonce().'" />';
+        $data = '<input type="hidden" name="secure[data]"      value="'.$this->getDataStringEncoded().'" />';
+        $signature = '<input type="hidden" name="secure[signature]" value="'.$this->getRequestSignature().'" />';
 
         return "$apiId\n$timestamp\n$nonce\n$data\n$signature\n";
     }

@@ -4,6 +4,11 @@
 # PHPStorm project files
 .idea/
 
+# PHPUnit generated Files
+.phpunit.cache/
+build/
+artifacts/
+
 vendor/
 composer.lock
 

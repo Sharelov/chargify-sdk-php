@@ -1,31 +1,36 @@
 <?php
 
+namespace Crucial\Tests\Lib\Crucial\Service\ChargifyV2\Direct\Utility;
+
+use Crucial\Service\ChargifyV2;
+use Crucial\Service\ChargifyV2\Direct\Utility\AuthRequest;
+use Crucial\Tests\Helpers\ClientV2Helper;
+use Crucial\Tests\Helpers\MockResponse;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7;
-use Crucial\Service\ChargifyV2;
-use Crucial\Service\ChargifyV2\Direct\Utility\AuthRequest;
+use PHPUnit\Framework\TestCase;
 
-class Crucial_Service_ChargifyV2_Direct_Utility_AuthRequestTest extends PHPUnit_Framework_TestCase
+class AuthRequestTest extends TestCase
 {
     public function testAuthRequestSuccess()
     {
         $chargify = ClientV2Helper::getInstance('v2.authTest.success');
-        $direct   = $chargify->direct();
+        $direct = $chargify->direct();
 
         // set a fake redirect URL. Chargify will 500 on us if we don't have a redirect URL
         $direct->setRedirect('http://localhost');
 
         $utilityAuthRequest = new AuthRequest($direct);
-        $success            = $utilityAuthRequest->test();
-        $response           = $utilityAuthRequest->getLastResponse();
+        $success = $utilityAuthRequest->test();
+        $response = $utilityAuthRequest->getLastResponse();
 
         // test should succeed
         $this->assertTrue($success);
 
         // chargify should redirect us
         $locationHeader = $response->getHeader('Location');
-        $this->assertTrue(!empty($locationHeader));
+        $this->assertTrue(! empty($locationHeader));
 
         // status code should be 302
         $this->assertEquals(302, $response->getStatusCode());
@@ -35,9 +40,9 @@ class Crucial_Service_ChargifyV2_Direct_Utility_AuthRequestTest extends PHPUnit_
     {
         // create a client with invalid credentials
         $chargify = new ChargifyV2([
-            'api_id'       => 'fdsafdsaf',
+            'api_id' => 'fdsafdsaf',
             'api_password' => 'fgsdgfdsg',
-            'api_secret'   => 'fdsfdsaf'
+            'api_secret' => 'fdsfdsaf',
         ]);
 
         $direct = $chargify->direct();
@@ -45,15 +50,15 @@ class Crucial_Service_ChargifyV2_Direct_Utility_AuthRequestTest extends PHPUnit_
         $direct->setRedirect('http://localhost');
 
         // set mock response
-        $mock    = new MockHandler([
-            Psr7\parse_response(MockResponse::read('v2.authTest.error'))
+        $mock = new MockHandler([
+            Psr7\Message::parseResponse(MockResponse::read('v2.authTest.error')),
         ]);
         $handler = HandlerStack::create($mock);
         $chargify->getHttpClient()->getConfig('handler')->setHandler($handler);
 
         $utilityAuthRequest = new AuthRequest($direct);
-        $success            = $utilityAuthRequest->test();
-        $response           = $utilityAuthRequest->getLastResponse();
+        $success = $utilityAuthRequest->test();
+        $response = $utilityAuthRequest->getLastResponse();
 
         // test should have failed
         $this->assertFalse($success);
@@ -66,7 +71,7 @@ class Crucial_Service_ChargifyV2_Direct_Utility_AuthRequestTest extends PHPUnit_
         $this->assertTrue(empty($locationHeader));
 
         // body should contain 'Incorrect signature'
-        $bodyIsInvalid = (0 === strcasecmp('Incorrect signature', trim((string)$response->getBody())));
+        $bodyIsInvalid = (0 === strcasecmp('Incorrect signature', trim((string) $response->getBody())));
         $this->assertTrue($bodyIsInvalid);
     }
 }

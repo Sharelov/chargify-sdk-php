@@ -17,16 +17,15 @@
 
 namespace Crucial\Service;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\HandlerStack;
-use Crucial\Service\Chargify;
 use Crucial\Service\ChargifyV2\Call;
 use Crucial\Service\ChargifyV2\Direct;
 use Crucial\Service\ChargifyV2\Exception\BadMethodCallException;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 
 class ChargifyV2
 {
@@ -90,21 +89,21 @@ class ChargifyV2
         $this->config = $config;
 
         // set individual properties
-        $this->apiId       = $config['api_id'];
+        $this->apiId = $config['api_id'];
         $this->apiPassword = $config['api_password'];
-        $this->apiSecret   = $config['api_secret'];
+        $this->apiSecret = $config['api_secret'];
 
         // set up http client
         $this->httpClient = new Client([
             'base_uri' => $this->baseUrl,
-            'handler'         => HandlerStack::create(),
-            'timeout'         => 10,
+            'handler' => HandlerStack::create(),
+            'timeout' => 10,
             'allow_redirects' => false,
-            'auth'            => [$this->apiId, $this->apiPassword],
-            'headers'         => [
-                'User-Agent' => 'chargify-sdk-php/' . Chargify::VERSION . ' (https://github.com/chargely/chargify-sdk-php)',
-                'Accept'     => 'application/json'
-            ]
+            'auth' => [$this->apiId, $this->apiPassword],
+            'headers' => [
+                'User-Agent' => 'chargify-sdk-php/'.Chargify::VERSION.' (https://github.com/chargely/chargify-sdk-php)',
+                'Accept' => 'application/json',
+            ],
         ]);
     }
 
@@ -186,10 +185,10 @@ class ChargifyV2
      */
     public function request($path, $method, $rawData = null, $params = [])
     {
-        $method  = strtoupper($method);
-        $path    = ltrim($path, '/');
-        $client  = $this->getHttpClient();
-        $method  = strtoupper($method);
+        $method = strtoupper($method);
+        $path = ltrim($path, '/');
+        $client = $this->getHttpClient();
+        $method = strtoupper($method);
         $options = [
             'query' => $params,
             'body' => null,
@@ -203,8 +202,8 @@ class ChargifyV2
             }
         }
 
-        if (!empty($rawData)) {
-            $options['body'] = Psr7\stream_for($rawData);
+        if (! empty($rawData)) {
+            $options['body'] = Psr7\Utils::streamFor($rawData);
         }
 
         try {
